@@ -1,6 +1,7 @@
 
 package reproductor_musica;
 
+import java.util.Arrays;
 import javax.swing.ImageIcon;
 
 /**
@@ -26,6 +27,10 @@ class Song{
     private ImageIcon ImagenDisco;
     
     public Song(int codigo,String nombre,double precio,ImageIcon ImagenDisco){
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.ImagenDisco = ImagenDisco;
         sumaEstrellas = 0;
         totalReviews =0;
         
@@ -53,8 +58,32 @@ class Song{
     }
 }
 class JTunes{
-    int conteo = 0;
-    public boolean addSong(int codigo, String nombre, double precio, ImageIcon imagenDisco){
-        for(int i = 0; conteo <= i;i++)
+    
+    private Song[] canciones;
+
+   
+    public JTunes(int tamano) {
+        canciones = new Song[tamano];
     }
+
+    public boolean addSong(int codigo, String nombre, double precio, ImageIcon imagenDisco) {
+        for (Song c : canciones) {
+            if (c != null && c.getCodigo() == codigo) {
+                return false; 
+            }
+        }
+
+        // Buscar un espacio vacío en el arreglo
+        for (int i = 0; i < canciones.length; i++) {
+            if (canciones[i] == null) {
+                canciones[i] = new Song(codigo, nombre, precio, imagenDisco);
+                return true; // agregado correctamente
+            }
+        }
+
+        return false; // no hay espacio
+    }
+}
+class MainJTunes{
+    
 }
