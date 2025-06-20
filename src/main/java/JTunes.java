@@ -9,9 +9,11 @@
  */
 
 import javax.swing.ImageIcon;
+import java.util.List;
+import java.util.LinkedList;
 
 public class JTunes {
-    private Song[] Canciones;
+    private final Song[] Canciones;
     
     public JTunes(int Tamano) {
         Canciones = new Song[Tamano];
@@ -29,7 +31,7 @@ public class JTunes {
         //Buscar un espacio libre en el arreglo
         for (int i = 0; i < Canciones.length; i++) {
             if (Canciones[i] == null) {
-                Canciones[i] = new Song(Codigo, Nombre Precio, ImagenDisco);
+                Canciones[i] = new Song(Codigo, Nombre, Precio, ImagenDisco);
                 return true;
             }
         }
@@ -61,8 +63,9 @@ public class JTunes {
     
     /*
         Metodo para obtener todas las canciones existentes
+        @return Arreglo
     */
-    public Song[] GetAllSongs() {
+    public List<Song> getAllSongs() {
         //Contar canciones no nulas
         int Contador = 0;
         for (Song Cancion : Canciones) {
@@ -72,12 +75,10 @@ public class JTunes {
         }
         
         //Crear arreglo del tamano exacto
-        Song[] CancionesExistentes = new Song[Contador];
-        int Indice = 0;
+        List<Song> CancionesExistentes = new LinkedList<>();
         for (Song Cancion : Canciones) {
             if (Cancion != null) {
-                CancionesExistentes[Indice] = Cancion;
-                Indice++;
+                CancionesExistentes.add(Cancion);
             }
         }
         return CancionesExistentes;
