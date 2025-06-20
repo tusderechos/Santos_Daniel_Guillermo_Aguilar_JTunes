@@ -81,6 +81,7 @@ public class MainJTunes extends JFrame {
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel4.setText("Canciones: ");
 
+        AreaCancionesTxt.setEditable(false);
         AreaCancionesTxt.setColumns(20);
         AreaCancionesTxt.setRows(5);
         jScrollPane1.setViewportView(AreaCancionesTxt);
@@ -223,7 +224,9 @@ public class MainJTunes extends JFrame {
         // TODO add your handling code here:
         try {
             int Codigo = Integer.parseInt(CalificarCancionTxt.getText());
-            int Estrellas = (Integer) EstrellasCmb.getSelectedItem();
+            
+            String EstrellasStr = (String) EstrellasCmb.getSelectedItem();
+            int Estrellas = Integer.parseInt(EstrellasStr);
             
             Song Cancion = jTunes.SearchSong(Codigo);
             if (Cancion != null) {
@@ -254,7 +257,7 @@ public class MainJTunes extends JFrame {
             Texto.append("==================================\n");
             Texto.append("Codigo: ").append(Cancion.getCodigo()).append("\n");
             Texto.append("Precio: $").append(String.format("%.2f", Cancion.getPrecio()));
-            Texto.append("Rating: ").append(String.format("%.1f", Cancion.SongRating()));
+            Texto.append(" Rating: ").append(String.format("%.1f", Cancion.SongRating())).append("★");
             Texto.append(Cancion.getImagenDisco() != null ? " [CON IMAGEN] " : " [SIN IMAGEN] ");
             Texto.append("\n\n");
         }

@@ -7,23 +7,14 @@ import javax.swing.ImageIcon;
  *
  * @author gaat1
  */
-public class Reproductor_Musica {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-    }
-    
-}
 class Song{
-    private int codigo;
-    private String nombre;
-    private double precio;
+    private final int codigo;
+    private final String nombre;
+    private final double precio;
     private int SumaEstrellas;
     private int TotalReviews;
-    private ImageIcon ImagenDisco;
+    private final ImageIcon ImagenDisco;
     
     public Song(int codigo,String nombre,double precio,ImageIcon ImagenDisco){
         this.codigo = codigo;
@@ -52,7 +43,7 @@ class Song{
                 TotalReviews++;
             }
         }
-    public double SongRating(int stars, int total){
+    public double SongRating(){
         if (TotalReviews == 0) {
             return 0.0;
         }
