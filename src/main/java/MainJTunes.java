@@ -15,7 +15,7 @@ import java.util.List;
 
 public class MainJTunes extends JFrame {
 
-    private JTunes jTunes;
+    private final JTunes jTunes;
     private ImageIcon ImagenSeleccionada;
     
     /**
@@ -71,7 +71,7 @@ public class MainJTunes extends JFrame {
             }
         });
 
-        BtnAgregar.setText("Agregar Imagen");
+        BtnAgregar.setText("Agregar Cancion");
         BtnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnAgregarActionPerformed(evt);
@@ -87,9 +87,14 @@ public class MainJTunes extends JFrame {
 
         jLabel5.setText("Calificar Cancion: ");
 
-        EstrellasCmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        EstrellasCmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5" }));
 
         BtnCalificar.setText("Calificar");
+        BtnCalificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCalificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -214,6 +219,26 @@ public class MainJTunes extends JFrame {
         }
     }//GEN-LAST:event_BtnAgregarActionPerformed
 
+    private void BtnCalificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCalificarActionPerformed
+        // TODO add your handling code here:
+        try {
+            int Codigo = Integer.parseInt(CalificarCancionTxt.getText());
+            int Estrellas = (Integer) EstrellasCmb.getSelectedItem();
+            
+            Song Cancion = jTunes.SearchSong(Codigo);
+            if (Cancion != null) {
+                jTunes.RateSong(Codigo, Estrellas);
+                JOptionPane.showMessageDialog(this, "Calificacion agregada");
+                ActualizarLista();
+                CalificarCancionTxt.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Cancion no encontrada");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Codigo invalido");
+        }
+    }//GEN-LAST:event_BtnCalificarActionPerformed
+
     private void LimpiarFormulario() {
         CodigoTxt.setText("");
         NombreTxt.setText("");
@@ -226,8 +251,20 @@ public class MainJTunes extends JFrame {
         List<Song> Canciones = jTunes.getAllSongs();
         
         for (Song Cancion : Canciones) {
-            Texto.append("Codigo: ").append(Cancion.getCodigo());
+            Texto.append("==================================\n");
+            Texto.append("Codigo: ").append(Cancion.getCodigo()).append("\n");
+            Texto.append("Precio: $").append(String.format("%.2f", Cancion.getPrecio()));
+            Texto.append("Rating: ").append(String.format("%.1f", Cancion.SongRating()));
+            Texto.append(Cancion.getImagenDisco() != null ? " [CON IMAGEN] " : " [SIN IMAGEN] ");
+            Texto.append("\n\n");
         }
+        
+        if (Canciones.isEmpty()) {
+            Texto.append("No hay canciones ingrsadas aun.\n");
+        }
+        
+        Texto.append("\n---Para calificar: Ingrse el codigo arriba ---");
+        AreaCancionesTxt.setText(Texto.toString());
     }
     
     /**
