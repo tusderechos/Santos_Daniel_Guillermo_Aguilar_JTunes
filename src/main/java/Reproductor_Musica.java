@@ -26,6 +26,10 @@ class Song{
     private ImageIcon ImagenDisco;
     
     public Song(int codigo,String nombre,double precio,ImageIcon ImagenDisco){
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.ImagenDisco = ImagenDisco;
         SumaEstrellas = 0;
         TotalReviews =0;
         
