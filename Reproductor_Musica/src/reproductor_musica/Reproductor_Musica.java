@@ -31,8 +31,8 @@ class Song{
         this.nombre = nombre;
         this.precio = precio;
         this.ImagenDisco = ImagenDisco;
-        sumaEstrellas = 0;
-        totalReviews =0;
+        this.sumaEstrellas = 0;
+        this.totalReviews =0;
         
         }
     public int getCodigo(){
@@ -47,14 +47,14 @@ class Song{
     public ImageIcon getImagenDisco(){
             return ImagenDisco;
        }
-    void addStars(int stars){
+    public void addStars(int stars){
             if(stars <= 5 && stars >= 0){
                 sumaEstrellas += stars;
                 totalReviews++;
             }
         }
-     void songRating(int stars, int total){
-        double rating = stars/total;
+    public  double songRating(int stars, int total){
+        return (totalReviews == 0) ? 0 : (double) sumaEstrellas / totalReviews;
     }
 }
 class JTunes{
@@ -83,7 +83,45 @@ class JTunes{
 
         return false; // no hay espacio
     }
-}
+    public Song searchSong(int codigo){
+        for (Song c : canciones) {
+            if (c != null && c.getCodigo() == codigo) {
+                return c;
+            }
+        }
+        return null;
+    }
+    public boolean rateSong(int codigo, int stars){
+        Song c = searchSong(codigo);
+        if (c != null) {
+            c.addStars(stars);
+            return true;
+        }
+        return false;
+        }
+    public Song[] getAllSong(){
+        int count = 0;
+    
+        for (Song c : canciones) {
+            if (c != null) {
+                count++;
+            }
+        }
+
+        Song[] resultado = new Song[count];
+        int index = 0;
+
+        for (Song c : canciones) {
+            if (c != null) {
+                resultado[index++] = c;
+            }
+        }
+
+        return resultado;
+        }
+    }
+    
+    
 class MainJTunes{
     
 }
